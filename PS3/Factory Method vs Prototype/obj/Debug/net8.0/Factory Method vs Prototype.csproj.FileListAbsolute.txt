@@ -1,0 +1,14 @@
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\bin\Debug\net8.0\Factory Method vs Prototype.exe
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\bin\Debug\net8.0\Factory Method vs Prototype.deps.json
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\bin\Debug\net8.0\Factory Method vs Prototype.runtimeconfig.json
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\bin\Debug\net8.0\Factory Method vs Prototype.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\bin\Debug\net8.0\Factory Method vs Prototype.pdb
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\obj\Debug\net8.0\Factory Method vs Prototype.GeneratedMSBuildEditorConfig.editorconfig
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\obj\Debug\net8.0\Factory Method vs Prototype.AssemblyInfoInputs.cache
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\obj\Debug\net8.0\Factory Method vs Prototype.AssemblyInfo.cs
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\obj\Debug\net8.0\Factory Method vs Prototype.csproj.CoreCompileInputs.cache
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\obj\Debug\net8.0\Factory Method vs Prototype.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\obj\Debug\net8.0\refint\Factory Method vs Prototype.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\obj\Debug\net8.0\Factory Method vs Prototype.pdb
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\obj\Debug\net8.0\Factory Method vs Prototype.genruntimeconfig.cache
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS3\Factory Method vs Prototype\obj\Debug\net8.0\ref\Factory Method vs Prototype.dll
