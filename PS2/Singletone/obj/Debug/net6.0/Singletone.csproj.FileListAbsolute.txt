@@ -1,0 +1,14 @@
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\bin\Debug\net6.0\Singletone.exe
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\bin\Debug\net6.0\Singletone.deps.json
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\bin\Debug\net6.0\Singletone.runtimeconfig.json
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\bin\Debug\net6.0\Singletone.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\bin\Debug\net6.0\Singletone.pdb
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\obj\Debug\net6.0\Singletone.GeneratedMSBuildEditorConfig.editorconfig
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\obj\Debug\net6.0\Singletone.AssemblyInfoInputs.cache
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\obj\Debug\net6.0\Singletone.AssemblyInfo.cs
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\obj\Debug\net6.0\Singletone.csproj.CoreCompileInputs.cache
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\obj\Debug\net6.0\Singletone.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\obj\Debug\net6.0\refint\Singletone.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\obj\Debug\net6.0\Singletone.pdb
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\obj\Debug\net6.0\Singletone.genruntimeconfig.cache
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\PS2\Singletone\obj\Debug\net6.0\ref\Singletone.dll
