@@ -125,6 +125,17 @@ class Director
                         i += 2;
                     }
                 break;
+                case "L":
+                    if (i + 2 < commands.Length && int.TryParse(commands[i + 1], out int lineX) && int.TryParse(commands[i + 2], out int lineY))
+                    {
+                        builder.LineTo(lineX, lineY);
+                        i += 2; // Przesuwamy indeks o dwa do przodu
+                    }
+                    break;
+
+                case "Z":
+                    builder.Close();
+                    break;
             }   
         }
     }
@@ -133,27 +144,41 @@ class Program
 {
     static void Main(string[] args)
     {
-      
+
+        //var drawingBuilder = new DrawingBuilder();
+
+
+        //drawingBuilder
+        //    .MoveTo(100, 400)  
+        //    .LineTo(200, 50)   
+        //    .LineTo(450, 300)
+        //    .LineTo(250, 250)
+        //    .Close();          
+
+
+        //drawingBuilder
+        //    .MoveTo(300, 350)  
+        //    .LineTo(350, 100)
+        //    .LineTo(50, 200);  
+
+
+        //Drawing drawing = drawingBuilder.Build();
+
+
+        //Console.WriteLine(drawing);
+
+
         var drawingBuilder = new DrawingBuilder();
 
-     
-        drawingBuilder
-            .MoveTo(100, 400)  
-            .LineTo(200, 50)   
-            .LineTo(450, 300)
-            .LineTo(250, 250)
-            .Close();          
+        // Przykład użycia z Directorem
+        Director director = new Director(drawingBuilder);
+        director.ConstructFromString("M 100 400 L 200 50 L 450 300 L 250 250 Z M 300 350 L 350 100 L 50 200");
 
-       
-        drawingBuilder
-            .MoveTo(300, 350)  
-            .LineTo(350, 100)
-            .LineTo(50, 200);  
-
-     
+        // Odbieramy gotowy rysunek
         Drawing drawing = drawingBuilder.Build();
 
-      
+        // Wypisujemy rysunek do konsoli
         Console.WriteLine(drawing);
     }
+
 }
