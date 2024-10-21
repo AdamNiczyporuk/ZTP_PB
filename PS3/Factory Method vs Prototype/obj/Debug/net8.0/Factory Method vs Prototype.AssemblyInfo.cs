@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Factory Method vs Prototype")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+066f1d968778490b1d6138c80a117a6edaee48eb")]
 [assembly: System.Reflection.AssemblyProductAttribute("Factory Method vs Prototype")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Factory Method vs Prototype")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
