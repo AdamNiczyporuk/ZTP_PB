@@ -1,0 +1,14 @@
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\obj\Debug\net6.0\Main.GeneratedMSBuildEditorConfig.editorconfig
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\obj\Debug\net6.0\Main.AssemblyInfoInputs.cache
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\obj\Debug\net6.0\Main.AssemblyInfo.cs
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\obj\Debug\net6.0\Main.csproj.CoreCompileInputs.cache
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\bin\Debug\net6.0\Main.exe
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\bin\Debug\net6.0\Main.deps.json
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\bin\Debug\net6.0\Main.runtimeconfig.json
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\bin\Debug\net6.0\Main.dll
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\bin\Debug\net6.0\Main.pdb
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\obj\Debug\net6.0\Main.dll
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\obj\Debug\net6.0\refint\Main.dll
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\obj\Debug\net6.0\Main.pdb
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\obj\Debug\net6.0\Main.genruntimeconfig.cache
+D:\NAUKA\Studia\SEMESTR5\ZTP\PS1\Main\obj\Debug\net6.0\ref\Main.dll
