@@ -4,3 +4,4 @@
 # Ignorowanie plików tymczasowych
 *.tmp
 /.vs/
+/PS4/Builder
