@@ -1,0 +1,6 @@
+# Ignorowanie folderu build
+/build/
+
+# Ignorowanie plików tymczasowych
+*.tmp
+/.vs/
