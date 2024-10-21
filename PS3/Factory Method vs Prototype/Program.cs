@@ -6,45 +6,61 @@ using System.Text;
 
 abstract class Cell
 {
-    public abstract string ToString();
-}
-class TextCell : Cell
-{
-    private readonly string value;
+    protected object value;
 
-    public TextCell(string value)
-    {
-        this.value = value;
-    }
+    public abstract Cell Clone();
+    public abstract void SetValue(object value);
 
     public override string ToString()
     {
-        return value.PadRight(15);
+        return value.ToString().PadRight(15);
+    }
+}
+class TextCell : Cell
+{
+    public TextCell(string value = "")
+    {
+        this.value = value;
+    }
+    public override Cell Clone()
+    {
+        return new TextCell();
+    }
+    public override void SetValue(object value)
+    {
+        this.value = value.ToString();
     }
 }
 class NumberCell : Cell
 {
-    private readonly int value;
-    public NumberCell(int value)
+    public NumberCell(int value = 0)
     {
         this.value = value;
     }
-    public override string ToString()
+    public override Cell Clone()
     {
-        return value.ToString().PadRight(15);
+        return new  NumberCell();
+    }
+    public override void SetValue(object value)
+    {
+        this.value = Convert.ToInt32(value);
     }
 }
 class BooleanCell : Cell
 {
-    private readonly bool value;
-    public BooleanCell(bool value)
+    public BooleanCell(bool value = false)
     {
         this.value = value;
     }
-    public override string ToString()
+    public override Cell Clone()
     {
-        return value.ToString().PadRight(15);
+        return new BooleanCell();
     }
+    public override void SetValue(object value)
+    {
+        this.value = Convert.ToBoolean(value);
+    }
+
 }
 
 // Klasa reprezentująca nagłówek kolumny w tabeli
@@ -58,65 +74,78 @@ class BooleanCell : Cell
 //    }
 //}
 
-abstract class Header
+class Header
 {
     public string Name { get; }
-    protected Header(string name)
+    private readonly Cell prototypeCell;
+
+    public Header(string name, Cell prototypeCell)
     {
         Name = name;
-    }
-    public abstract Cell CreateCell(object value);
-    public abstract Cell CreateDefaultCell();
-}
-class TextHeader : Header
-{
-    public TextHeader(string name) : base(name) { }
-
-    public override Cell CreateCell(object value)
-    {
-        return new TextCell(value.ToString());
+        this.prototypeCell = prototypeCell;
     }
 
-    public override Cell CreateDefaultCell()
+    public Cell CreateCell(object value)
     {
-        return new TextCell("");
+        Cell newCell = prototypeCell.Clone(); 
+        newCell.SetValue(value); 
+        return newCell;
+    }
+
+    public Cell CreateDefaultCell()
+    {
+        return prototypeCell.Clone();
     }
 }
-class NumberHeader : Header
-{
-    public NumberHeader(string name) : base(name) { }
+//class TextHeader : Header
+//{
+//    public TextHeader(string name) : base(name) { }
 
-    public override Cell CreateCell(object value)
-    {
-        if (int.TryParse(value.ToString(), out int number))
-        {
-            return new NumberCell(number);
-        }
-        throw new ArgumentException("Invalid number format.");
-    }
+//    public override Cell CreateCell(object value)
+//    {
+//        return new TextCell(value.ToString());
+//    }
 
-    public override Cell CreateDefaultCell()
-    {
-        return new NumberCell(0);
-    }
-}
+//    public override Cell CreateDefaultCell()
+//    {
+//        return new TextCell("");
+//    }
+//}
+//class NumberHeader : Header
+//{
+//    public NumberHeader(string name) : base(name) { }
 
-class BooleanHeader : Header
-{
-    public BooleanHeader(string name) : base(name) { }
-    public override Cell CreateCell(object value)
-    {
-        if(bool.TryParse(value.ToString(), out bool boolean))
-        {
-            return new BooleanCell(boolean);
-        }
-        throw new ArgumentException("Invalid boolean format.");
-    }
-    public override Cell CreateDefaultCell()
-    {
-        return new BooleanCell(false);
-    }
-}
+//    public override Cell CreateCell(object value)
+//    {
+//        if (int.TryParse(value.ToString(), out int number))
+//        {
+//            return new NumberCell(number);
+//        }
+//        throw new ArgumentException("Invalid number format.");
+//    }
+
+//    public override Cell CreateDefaultCell()
+//    {
+//        return new NumberCell(0);
+//    }
+//}
+
+//class BooleanHeader : Header
+//{
+//    public BooleanHeader(string name) : base(name) { }
+//    public override Cell CreateCell(object value)
+//    {
+//        if(bool.TryParse(value.ToString(), out bool boolean))
+//        {
+//            return new BooleanCell(boolean);
+//        }
+//        throw new ArgumentException("Invalid boolean format.");
+//    }
+//    public override Cell CreateDefaultCell()
+//    {
+//        return new BooleanCell(false);
+//    }
+//}
 
 
 // Klasa reprezentująca tabelę
@@ -156,7 +185,7 @@ class Table
         }
 
         rows.Add(newRow);
-      
+
     }
 
     public override string ToString()
@@ -195,9 +224,9 @@ class Program
         Table table = new Table();
 
         // Dodajemy kolumny
-        table.AddColumn(new TextHeader("Name"));      
-        table.AddColumn(new NumberHeader("Age"));    
-        table.AddColumn(new BooleanHeader("Is Student"));
+        table.AddColumn(new Header("Name", new TextCell()));
+        table.AddColumn(new Header("Age", new NumberCell()));
+        table.AddColumn(new Header("Is Student", new BooleanCell()));
 
         // Dodajemy wiersze
         table.AddRow("Alice", 30, false);
