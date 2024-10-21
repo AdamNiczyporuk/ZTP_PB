@@ -135,28 +135,28 @@ class Table
     {
         headers.Add(header);
 
-        // Dodajemy puste komórki do każdego z istniejących wierszy
+        // Dodajemy domyślne komórki do każdego z istniejących wierszy
         foreach (var row in rows)
         {
-            row.Add(new Cell(""));
+            row.Add(header.CreateDefaultCell());
         }
     }
 
-    public void AddRow(params string[] cellValues)
+    public void AddRow(params object[] cellValues)
     {
         if (cellValues.Length != headers.Count)
         {
             throw new ArgumentException("Liczba wartości nie zgadza się z liczbą kolumn.");
         }
 
-        // Dodajemy wiersz wypełniony komórkami z wartością
         var newRow = new List<Cell>();
-        foreach (var value in cellValues)
+        for (int i = 0; i < cellValues.Length; i++)
         {
-            newRow.Add(new Cell(value));
+            newRow.Add(headers[i].CreateCell(cellValues[i]));
         }
 
         rows.Add(newRow);
+      
     }
 
     public override string ToString()
@@ -195,14 +195,14 @@ class Program
         Table table = new Table();
 
         // Dodajemy kolumny
-        table.AddColumn(new Header("Name"));
-        table.AddColumn(new Header("Age"));
-        table.AddColumn(new Header("Is Student"));
+        table.AddColumn(new TextHeader("Name"));      
+        table.AddColumn(new NumberHeader("Age"));    
+        table.AddColumn(new BooleanHeader("Is Student"));
 
         // Dodajemy wiersze
-        table.AddRow("Alice", "30", "False");
-        table.AddRow("Bob", "25", "True");
-        table.AddRow("Charlie", "35", "False");
+        table.AddRow("Alice", 30, false);
+        table.AddRow("Bob", 25, true);
+        table.AddRow("Charlie", 35, false);
 
         // Wyświetlamy tabelę
         Console.WriteLine(table.ToString());
