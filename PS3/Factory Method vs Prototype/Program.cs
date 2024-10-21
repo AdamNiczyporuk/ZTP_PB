@@ -82,7 +82,41 @@ class TextHeader : Header
         return new TextCell("");
     }
 }
+class NumberHeader : Header
+{
+    public NumberHeader(string name) : base(name) { }
 
+    public override Cell CreateCell(object value)
+    {
+        if (int.TryParse(value.ToString(), out int number))
+        {
+            return new NumberCell(number);
+        }
+        throw new ArgumentException("Invalid number format.");
+    }
+
+    public override Cell CreateDefaultCell()
+    {
+        return new NumberCell(0);
+    }
+}
+
+class BooleanHeader : Header
+{
+    public BooleanHeader(string name) : base(name) { }
+    public override Cell CreateCell(object value)
+    {
+        if(bool.TryParse(value.ToString(), out bool boolean))
+        {
+            return new BooleanCell(boolean);
+        }
+        throw new ArgumentException("Invalid boolean format.");
+    }
+    public override Cell CreateDefaultCell()
+    {
+        return new BooleanCell(false);
+    }
+}
 
 
 // Klasa reprezentująca tabelę
