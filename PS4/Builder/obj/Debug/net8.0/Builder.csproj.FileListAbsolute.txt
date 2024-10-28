@@ -13,3 +13,8 @@ D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS4\Builder\obj\Debug\net8.0\refint\Bu
 D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS4\Builder\obj\Debug\net8.0\Builder.pdb
 D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS4\Builder\obj\Debug\net8.0\Builder.genruntimeconfig.cache
 D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS4\Builder\obj\Debug\net8.0\ref\Builder.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS4\Builder\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS4\Builder\bin\Debug\net8.0\System.Drawing.Common.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS4\Builder\bin\Debug\net8.0\runtimes\win\lib\net8.0\Microsoft.Win32.SystemEvents.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS4\Builder\obj\Debug\net8.0\Builder.csproj.AssemblyReference.cache
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS4\Builder\obj\Debug\net8.0\Builder.csproj.CopyComplete

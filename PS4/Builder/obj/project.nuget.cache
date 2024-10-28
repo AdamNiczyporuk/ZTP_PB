@@ -1,8 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "lPEhrpar39LDnsHpH2bQfDw8g5eECf4thuDIL6LG64h/HjpGLYzOBR9wPQfRfqkHuLdDJFuZnDGp+J5sLCH7uw==",
+  "dgSpecHash": "heRNDXKjAWFjG2rj7M5UzIvMO8omIh0G2bYAxdrc4LLphMqq6L2z7a7Qii61kAfrsafE3n/YkMj0DQe4D2JmAw==",
   "success": true,
   "projectFilePath": "D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\ZTP_PB\\PS4\\Builder\\Builder.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Adam\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+    "C:\\Users\\Adam\\.nuget\\packages\\system.drawing.common\\8.0.10\\system.drawing.common.8.0.10.nupkg.sha512"
+  ],
   "logs": []
 }

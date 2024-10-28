@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\ZTP_PB\\PS4\\Builder\\Builder.csproj": {}
+    "D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\ZTP_PB\\PS5\\Proxy\\Proxy.csproj": {}
   },
   "projects": {
-    "D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\ZTP_PB\\PS4\\Builder\\Builder.csproj": {
+    "D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\ZTP_PB\\PS5\\Proxy\\Proxy.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\ZTP_PB\\PS4\\Builder\\Builder.csproj",
-        "projectName": "Builder",
-        "projectPath": "D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\ZTP_PB\\PS4\\Builder\\Builder.csproj",
+        "projectUniqueName": "D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\ZTP_PB\\PS5\\Proxy\\Proxy.csproj",
+        "projectName": "Proxy",
+        "projectPath": "D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\ZTP_PB\\PS5\\Proxy\\Proxy.csproj",
         "packagesPath": "C:\\Users\\Adam\\.nuget\\packages\\",
-        "outputPath": "D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\ZTP_PB\\PS4\\Builder\\obj\\",
+        "outputPath": "D:\\AAAAAAAANAUKA\\AAStudia\\SEMESTR5\\ZTP_PB\\PS5\\Proxy\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -43,12 +43,6 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "dependencies": {
-            "System.Drawing.Common": {
-              "target": "Package",
-              "version": "[8.0.10, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
