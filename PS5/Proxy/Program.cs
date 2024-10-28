@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Security;
 
 public interface INewsService
 {
@@ -61,7 +63,7 @@ public class NewsService : INewsService
     private int _nextId;
 
     public NewsService()
-    {
+    {    
         _messages = new List<Message>();
         _nextId = 1;
     }
@@ -105,6 +107,66 @@ public class NewsService : INewsService
 
         _messages.Remove(message);
         return new Response("Success", "Message deleted successfully.");
+    }
+}
+public class ProxyNewsService : INewsService
+{
+    private readonly INewsService _newsService;
+    private readonly User _user;
+
+    public ProxyNewsService(INewsService newsService, User user)
+    {
+        _newsService = newsService;
+        _user = user;
+    }
+
+
+    public Response AddMessage(string title, string content)
+    {
+       if(_user.Role == UserRole.Admin || _user.Role == UserRole.User || _user.Role== UserRole.Moderator)
+        {
+           return  _newsService.AddMessage(title, content);
+        }
+       else
+        {
+            throw new UnauthorizedAccessException($"{_user.Role} doesnot have permission to delete documents.");
+        }
+    }
+
+    public Response DeleteMessage(int id)
+    {
+        if (_user.Role == UserRole.Admin )
+        {
+            return _newsService.DeleteMessage(id);
+        }
+        else
+        {
+            throw new UnauthorizedAccessException($"{_user.Role} doesnot have permission to delete documents.");
+        }
+    }
+
+    public Response EditMessage(int id, string newContent)
+    {
+        if(_user.Role == UserRole.Admin  || _user.Role== UserRole.Moderator)
+        {
+            return _newsService.EditMessage(id, newContent);
+        }
+        else
+        {
+            throw new UnauthorizedAccessException($"{_user.Role} doesnot have permission to delete documents.");
+        }
+    }
+
+    public Response ReadMessage(int id)
+    {
+        if(_user.Role == UserRole.Admin|| _user.Role == UserRole.User || _user.Role == UserRole.Moderator ||_user.Role == UserRole.Guest)
+        {
+            return _newsService.ReadMessage(id);
+        }
+        else
+        {
+            throw new UnauthorizedAccessException($"{_user.Role} doesnot have permission to delete documents.");
+        }
     }
 }
 
