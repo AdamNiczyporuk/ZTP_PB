@@ -3,3 +3,13 @@ D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\obj\Debug\net8.0\Adapter.A
 D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\obj\Debug\net8.0\Adapter.AssemblyInfo.cs
 D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\obj\Debug\net8.0\Adapter.csproj.CoreCompileInputs.cache
 D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\obj\Debug\net8.0\Adapter.sourcelink.json
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\bin\Debug\net8.0\Adapter.exe
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\bin\Debug\net8.0\Adapter.deps.json
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\bin\Debug\net8.0\Adapter.runtimeconfig.json
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\bin\Debug\net8.0\Adapter.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\bin\Debug\net8.0\Adapter.pdb
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\obj\Debug\net8.0\Adapter.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\obj\Debug\net8.0\refint\Adapter.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\obj\Debug\net8.0\Adapter.pdb
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\obj\Debug\net8.0\Adapter.genruntimeconfig.cache
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP_PB\PS6\Adapter\obj\Debug\net8.0\ref\Adapter.dll

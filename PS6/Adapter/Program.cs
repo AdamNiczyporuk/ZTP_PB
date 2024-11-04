@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection;
 
 public interface ITableDataSource
 {
@@ -99,6 +100,43 @@ public class ArrayAdapter : ITableDataSource
         return _array.Length;
     }
 }
+public class GenericArrayAdapter<T> : ITableDataSource
+{
+    private readonly T[] _array;
+
+    public GenericArrayAdapter(T[] array)
+    {
+        _array = array;
+    }
+
+    public int GetRowCount()
+    {
+        return _array.Length;
+    }
+
+    public int GetColumnCount()
+    {
+        return 2;
+    }
+
+    public string GetColumnName(int columnIndex)
+    {
+        return columnIndex == 0 ? "Index" : "Value";
+    }
+
+    public string GetCellData(int rowIndex, int columnIndex)
+    {
+        if (columnIndex == 0)
+        {
+            return rowIndex.ToString();
+        }
+        else if (columnIndex == 1)
+        {
+            return _array[rowIndex]?.ToString() ?? "null";
+        }
+        return "Invalid Column";
+    }
+}
 public class DictionaryAdapter : ITableDataSource
 {
     public readonly Dictionary<string, int> _dictionary;
@@ -153,7 +191,97 @@ public class DictionaryAdapter : ITableDataSource
         return _dictionary.Count;
     }
 }
+public class GenericDictionaryAdapter<TKey, TValue> : ITableDataSource
+{
+    private readonly Dictionary<TKey, TValue> _dictionary;
+    private readonly List<TKey> _keys;
 
+    public GenericDictionaryAdapter(Dictionary<TKey, TValue> dictionary)
+    {
+        _dictionary = dictionary;
+        _keys = new List<TKey>(_dictionary.Keys);
+    }
+
+    public int GetRowCount()
+    {
+        return _dictionary.Count;
+    }
+
+    public int GetColumnCount()
+    {
+        return 2;
+    }
+
+    public string GetColumnName(int columnIndex)
+    {
+        return columnIndex == 0 ? "Key" : "Value";
+    }
+
+    public string GetCellData(int rowIndex, int columnIndex)
+    {
+        if (rowIndex < 0 || rowIndex >= _keys.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(rowIndex), "Invalid row index.");
+        }
+
+        TKey key = _keys[rowIndex];
+
+        if (columnIndex == 0)
+        {
+            return key?.ToString() ?? "null";
+        }
+        else if (columnIndex == 1)
+        {
+            return _dictionary[key]?.ToString() ?? "null";
+        }
+        return "Invalid Column";
+    }
+}
+
+public class GenericListAdapter<T> : ITableDataSource
+{
+    private readonly List<T> _list;
+    private readonly PropertyInfo[] _properties;
+
+    public GenericListAdapter(List<T> list)
+    {
+        _list = list;
+        _properties = typeof(T).GetProperties();
+    }
+
+    public int GetRowCount()
+    {
+        return _list.Count;
+    }
+
+    public int GetColumnCount()
+    {
+        return _properties.Length;
+    }
+
+    public string GetColumnName(int columnIndex)
+    {
+        if (columnIndex < 0 || columnIndex >= _properties.Length)
+        {
+            throw new ArgumentOutOfRangeException(nameof(columnIndex), "Invalid column index.");
+        }
+
+        return _properties[columnIndex].Name;
+    }
+
+    public string GetCellData(int rowIndex, int columnIndex)
+    {
+        if (rowIndex < 0 || rowIndex >= _list.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(rowIndex), "Invalid row index.");
+        }
+
+        T item = _list[rowIndex];
+        object value = _properties[columnIndex].GetValue(item);
+
+        return value?.ToString() ?? "null";
+    }
+}
 public class UserListAdapter : ITableDataSource
 {
     private readonly List<User> _users;
@@ -214,6 +342,7 @@ public class UserListAdapter : ITableDataSource
         return _users.Count;
     }
 }
+
 public class Program
 {
     public static void Main()
@@ -222,8 +351,8 @@ public class Program
 
         // Test adaptera dla tablicy liczb całkowitych
         int[] numbersArray = { 10, 20, 30, 40, 50 };
-        ITableDataSource arrayAdapter = new ArrayAdapter(numbersArray);
-        Console.WriteLine("Array Table:");
+        ITableDataSource arrayAdapter = new GenericArrayAdapter<int>(numbersArray);
+        Console.WriteLine("Generic Array Table:");
         tableService.DisplayTable(arrayAdapter);
 
         // Test adaptera dla słownika
@@ -233,8 +362,8 @@ public class Program
             { "Two", 2 },
             { "Three", 3 }
         };
-        ITableDataSource dictionaryAdapter = new DictionaryAdapter(dictionary);
-        Console.WriteLine("\nDictionary Table:");
+        ITableDataSource dictionaryAdapter = new GenericDictionaryAdapter<string, int>(dictionary);
+        Console.WriteLine("\nGeneric Dictionary Table:");
         tableService.DisplayTable(dictionaryAdapter);
 
         // Test adaptera dla listy użytkowników
@@ -244,8 +373,8 @@ public class Program
             new User("Bob", 30, "Inactive"),
             new User("Charlie", 35, "Active")
         };
-        ITableDataSource userListAdapter = new UserListAdapter(users);
-        Console.WriteLine("\nUser List Table:");
+        ITableDataSource userListAdapter = new GenericListAdapter<User>(users);
+        Console.WriteLine("\nGeneric User List Table:");
         tableService.DisplayTable(userListAdapter);
     }
 }
