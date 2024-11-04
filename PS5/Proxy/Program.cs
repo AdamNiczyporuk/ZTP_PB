@@ -200,42 +200,7 @@ public class Program
 {
     public static void Main()
     {
-        //// Tworzymy instancję rzeczywistego serwisu
-        //INewsService newsService = new NewsService();
-
-        //// Dodawanie wiadomości
-        //var addResponse1 = newsService.AddMessage("Breaking News", "New breakthrough in AI technology.");
-        //Console.WriteLine($"{addResponse1.Status}: {addResponse1.Message}");
-
-        //var addResponse2 = newsService.AddMessage("Market Update", "Stocks soar after positive earnings reports.");
-        //Console.WriteLine($"{addResponse2.Status}: {addResponse2.Message}");
-
-        //// Odczyt wiadomości
-        //var readResponse1 = newsService.ReadMessage(1);
-        //Console.WriteLine($"{readResponse1.Status}: {readResponse1.Message}");
-
-        //var readResponse2 = newsService.ReadMessage(2);
-        //Console.WriteLine($"{readResponse2.Status}: {readResponse2.Message}");
-
-        //// Próbujemy odczytać wiadomość, która nie istnieje
-        //var readResponse3 = newsService.ReadMessage(3);
-        //Console.WriteLine($"{readResponse3.Status}: {readResponse3.Message}");
-
-        //// Edycja wiadomości
-        //var editResponse = newsService.EditMessage(1, "Updated content: AI technology is advancing rapidly.");
-        //Console.WriteLine($"{editResponse.Status}: {editResponse.Message}");
-
-        //// Odczyt wiadomości po edycji
-        //var readResponseAfterEdit = newsService.ReadMessage(1);
-        //Console.WriteLine($"{readResponseAfterEdit.Status}: {readResponseAfterEdit.Message}");
-
-        //// Usunięcie wiadomości
-        //var deleteResponse = newsService.DeleteMessage(2);
-        //Console.WriteLine($"{deleteResponse.Status}: {deleteResponse.Message}");
-
-        //// Próba odczytania usuniętej wiadomości
-        //var readResponseAfterDelete = newsService.ReadMessage(2);
-        //Console.WriteLine($"{readResponseAfterDelete.Status}: {readResponseAfterDelete.Message}");
+        
 
         INewsService newsService = new NewsService();
 

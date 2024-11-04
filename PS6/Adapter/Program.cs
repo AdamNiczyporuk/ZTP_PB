@@ -51,6 +51,52 @@ public class User
     }
 }
 
+public class ArrayAdapter : ITableDataSource
+{
+    private readonly int[] _array;
+    
+    public ArrayAdapter(int[] array)
+    {
+        _array = array;
+    }
+    public string GetCellData(int rowIndex, int columnIndex)
+    {
+        if (columnIndex == 0)
+        {
+            return rowIndex.ToString();
+        }
+        else if (columnIndex == 1)
+        {
+
+        }
+    }
+
+    public int GetColumnCount()
+    {
+        return 2;
+    }
+
+    public string GetColumnName(int columnIndex)
+    {
+        if (columnIndex == 0)
+        {
+            return "Index";
+        }
+        else if (columnIndex== 1)
+        {
+            return "Value";
+        }
+         return columnIndex.ToString();
+       
+
+        
+    }
+
+    public int GetRowCount()
+    {
+        return _array.Length;
+    }
+}
 public class Program
 {
     public static void Main()
