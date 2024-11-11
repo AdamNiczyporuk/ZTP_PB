@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml.Serialization;
+using System.Collections.Generic;
 
 public interface ITaskComponent
 {
@@ -13,8 +15,11 @@ public interface ITaskComponent
 
     void MarkAsCompleted (DateTime completionDate);
     void Display(int depth = 0);
+    string GenerateGanttChart(DateTime projectStart, DateTime projectEnd);
+   
 
 }
+
 
 public class Task : ITaskComponent
 {
@@ -46,15 +51,62 @@ public class Task : ITaskComponent
             return IsLate ? "[Completed Late]" : "[Completed]";
         return "[Pending]";
     }
+    public string GetStatusGant(DateTime date )
+    {
+        if(IsCompleted && !IsLate && date >= StartDate && date <=EndDate)
+        {
+            return "X";
+        }
+        if(IsCompleted && IsLate && date >= StartDate && date <=EndDate)
+        {
+            return "!";
+        }
+        if(date >= StartDate && date <=EndDate)
+        {
+            return "#";
+        }
+        return ".";
+    }
 
     // Używana do wyświetlenia szczegółów zadania wraz ze statusem
     public override string ToString()
     {
         return $"{Name} ({StartDate:dd.MM.yyyy} to {EndDate:dd.MM.yyyy}) - Status: {GetStatus()}";
     }
+   
     public void Display(int depth = 0)
     {
         Console.WriteLine($"{new string(' ', depth * 2)}- {Name} ({StartDate:dd.MM.yyyy} to {EndDate:dd.MM.yyyy}) - Status: {GetStatus()}");
+    }
+
+    public string GenerateGanttChart(DateTime projectStart, DateTime projectEnd)
+    {
+        // Obliczenie liczby dni całkowitego projektu
+        int totalProjectDays = (projectEnd - projectStart).Days + 1;
+
+        // Obliczenie liczby dni trwania zadania
+        int taskDuration = (EndDate - StartDate).Days + 1;
+
+        // Tworzymy pasek z wykresem Gantta
+        string taskBar = $"{Name.Substring(0,3),-25} "; // Nazwa zadania z odpowiednim formatowaniem
+
+        // Przechodzimy po dniach w zakresie projektu
+        for (int i = 0; i < totalProjectDays; i++)
+        {
+            DateTime currentDate = projectStart.AddDays(i);
+
+            // Jeżeli dzień jest w zakresie zadania, generujemy odpowiedni symbol
+            if (currentDate >= StartDate && currentDate <= EndDate)
+            {
+                taskBar += GetStatusGant(currentDate); // X, !, # lub .
+            }
+            else
+            {
+                taskBar += "."; // Jeżeli dzień poza zakresem zadania, wyświetlamy kropkę
+            }
+        }
+
+        return taskBar;
     }
 
 }
@@ -118,6 +170,17 @@ public class TaskGroup : ITaskComponent
         }
     }
 
+    public string GenerateGanttChart(DateTime projectStart, DateTime projectEnd)
+    {
+        List<String> chart = new List<string>();
+
+        foreach(var task in _tasks)
+        {
+            chart.Add(task.GenerateGanttChart(projectStart, projectEnd));
+        }
+        return string .Join("\n", chart);
+    }
+
 
 
 }
@@ -141,6 +204,94 @@ public class OptionalTaskGroup: TaskGroup
         }
     }
 }
+
+
+public class RecurringTask
+{
+    public string Name { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public int IntervalInDays { get; set; } // Okres powtarzania w dniach
+    public List<TaskInstance> Instances { get; set; } = new List<TaskInstance>();
+
+    // Konstruktor
+    public RecurringTask(string name, DateTime startDate, DateTime endDate, int intervalInDays)
+    {
+        Name = name;
+        StartDate = startDate;
+        EndDate = endDate;
+        IntervalInDays = intervalInDays;
+        GenerateTaskInstances();
+    }
+
+    // Generowanie instancji zadania na podstawie daty rozpoczęcia i zakończenia
+    private void GenerateTaskInstances()
+    {
+        DateTime currentDate = StartDate;
+
+        // Generowanie instancji zadania cyklicznego
+        while (currentDate <= EndDate)
+        {
+            Instances.Add(new TaskInstance
+            {
+                Date = currentDate,
+                Status = TaskStatus.NotCompleted
+            });
+            currentDate = currentDate.AddDays(IntervalInDays);
+        }
+    }
+
+    // Metoda do oznaczania zadania jako wykonanego
+    public void MarkCompleted(DateTime completedDate)
+    {
+        foreach (var instance in Instances)
+        {
+            if (instance.Date == completedDate)  // Sprawdzamy, czy data powtórzenia jest równa dacie wykonania
+            {
+                instance.Status = TaskStatus.CompletedOnTime;
+            }
+            else if (instance.Date < completedDate && instance.Status == TaskStatus.NotCompleted)
+            {
+                instance.Status = TaskStatus.CompletedLate;
+            }
+        }
+    }
+
+    // Metoda do wyświetlania wykresu Gantta
+    public string GetGanttChart()
+    {
+        char[] ganttRepresentation = new char[Instances.Count];
+
+        for (int i = 0; i < Instances.Count; i++)
+        {
+            ganttRepresentation[i] = Instances[i].Status switch
+            {
+                TaskStatus.CompletedOnTime => 'X',
+                TaskStatus.CompletedLate => '!',
+                TaskStatus.NotCompleted => '.',
+                _ => '.'
+            };
+        }
+
+        return new string(ganttRepresentation);
+    }
+}
+
+// Statusy zadania
+public enum TaskStatus
+{
+    NotCompleted,
+    CompletedOnTime,
+    CompletedLate
+}
+
+// Instancja zadania cyklicznego
+public class TaskInstance
+{
+    public DateTime Date { get; set; }
+    public TaskStatus Status { get; set; }
+}
+
 public class Program
 {
     public static void Main()
@@ -234,55 +385,100 @@ public class Program
 
 
         // Option 2 
+
+
+
         // Ustalanie szerokości konsoli i linii
-        int consoleWidth = Console.WindowWidth;
-        string line = new string('-', consoleWidth - 1);
+        //int consoleWidth = Console.WindowWidth;
+        //string line = new string('-', consoleWidth - 1);
 
-        // Tworzymy zadania
-        var task1 = new Task("1A - Implementacja algorytmu sortowania", new DateTime(2024, 10, 21), new DateTime(2024, 10, 27));
-        var task2 = new Task("1B - Analiza złożoności czasowej", new DateTime(2024, 10, 24), new DateTime(2024, 10, 31));
-        var task3 = new Task("2A - Projektowanie schematu bazy danych", new DateTime(2024, 10, 28), new DateTime(2024, 11, 3));
-        var task4 = new Task("2B - Tworzenie zapytań SQL", new DateTime(2024, 11, 1), new DateTime(2024, 11, 30));
+        //// Tworzymy zadania
+        //var task1 = new Task("1A - Implementacja algorytmu sortowania", new DateTime(2024, 10, 21), new DateTime(2024, 10, 27));
+        //var task2 = new Task("1B - Analiza złożoności czasowej", new DateTime(2024, 10, 24), new DateTime(2024, 10, 31));
+        //var task3 = new Task("2A - Projektowanie schematu bazy danych", new DateTime(2024, 10, 28), new DateTime(2024, 11, 3));
+        //var task4 = new Task("2B - Tworzenie zapytań SQL", new DateTime(2024, 11, 1), new DateTime(2024, 11, 30));
 
-        // Oznaczanie przykładowych zadań jako wykonane (z różnymi datami ukończenia)
-        task1.MarkAsCompleted(new DateTime(2024, 10, 25)); // Wykonane na czas
-        task2.MarkAsCompleted(new DateTime(2024, 11, 1)); // Wykonane z opóźnieniem
-        // task3 i task4 są jeszcze niewykonane
+        //// Oznaczanie przykładowych zadań jako wykonane (z różnymi datami ukończenia)
+        //task1.MarkAsCompleted(new DateTime(2024, 10, 25)); // Wykonane na czas
+        //task2.MarkAsCompleted(new DateTime(2024, 11, 1)); // Wykonane z opóźnieniem
+        //// task3 i task4 są jeszcze niewykonane
 
-        // Lista zadań (przykładowa organizacja wyłącznie według nazw)
-        var tasks = new List<Task> { task1, task2, task3, task4 };
+        //// Lista zadań (przykładowa organizacja wyłącznie według nazw)
+        //var tasks = new List<Task> { task1, task2, task3, task4 };
 
-        // Wyświetlanie listy zadań i ich statusów
-        Console.WriteLine("Lista zadań:");
-        foreach (var task in tasks)
-        {
-            Console.WriteLine(task);
-        }
+        //// Wyświetlanie listy zadań i ich statusów
+        //Console.WriteLine("Lista zadań:");
+        //foreach (var task in tasks)
+        //{
+        //    Console.WriteLine(task);
+        //}
 
-        // Tworzenie grupy zadań (zwykła i opcjonalna)
-        var group1 = new TaskGroup("Grupa Obowiązkowa");
-        group1.Add(task1);
-        group1.Add(task2);
+        //// Tworzenie grupy zadań (zwykła i opcjonalna)
+        //var group1 = new TaskGroup("Grupa Obowiązkowa");
+        //group1.Add(task1);
+        //group1.Add(task2);
 
-        var group2 = new OptionalTaskGroup("Grupa Opcjonalna");
-        group2.Add(task3);
-        group2.Add(task4);
+        //var group2 = new OptionalTaskGroup("Grupa Opcjonalna");
+        //group2.Add(task3);
+        //group2.Add(task4);
 
-        // Wyświetlanie grup
-        Console.WriteLine("\nStruktura grupy zadań:");
-        group1.Display();
-        group2.Display();
-        Console.WriteLine(line);
+        //// Wyświetlanie grup
+        //Console.WriteLine("\nStruktura grupy zadań:");
+        //group1.Display();
+        //group2.Display();
+        //Console.WriteLine(line);
 
-        // Oznaczanie grupy jako wykonanej (rekursywne oznaczanie zadań w grupach)
-  
-        group1.MarkAsCompleted(DateTime.Now);
-        group2.MarkAsCompleted(DateTime.Now);
+        //// Oznaczanie grupy jako wykonanej (rekursywne oznaczanie zadań w grupach)
 
-        // Ponowne wyświetlanie statusów grup
-        group1.Display();
-        group2.Display();
+        //group1.MarkAsCompleted(DateTime.Now);
+        //group2.MarkAsCompleted(DateTime.Now);
 
-        
+        //// Ponowne wyświetlanie statusów grup
+        //group1.Display();
+        //group2.Display();
+
+
+        //Option 3
+
+        //// Tworzymy zadania
+        //var task1 = new Task("1A - Implementacja algorytmu sortowania", new DateTime(2024, 10, 21), new DateTime(2024, 10, 27));
+        //var task2 = new Task("1B - Analiza złożoności czasowej", new DateTime(2024, 10, 24), new DateTime(2024, 10, 31));
+        //var task3 = new Task("2A - Projektowanie schematu bazy danych", new DateTime(2024, 10, 28), new DateTime(2024, 11, 3));
+        //var task4 = new Task("2B - Tworzenie zapytań SQL", new DateTime(2024, 11, 1), new DateTime(2024, 11, 30));
+
+        //// Oznaczamy przykładowe zadania jako wykonane
+        //task1.MarkAsCompleted(new DateTime(2024, 10, 25)); // Wykonane na czas
+        //task2.MarkAsCompleted(new DateTime(2024, 11, 1)); // Wykonane z opóźnieniem
+
+        //// Tworzymy grupę zadań
+        //var group = new TaskGroup("Grupa 1");
+        //group.Add(task1);
+        //group.Add(task2);
+        //group.Add(task3);
+        //group.Add(task4);
+
+        //// Określamy zakres dat
+        //DateTime projectStart = new DateTime(2024, 10, 21);
+        //DateTime projectEnd = new DateTime(2024, 11, 30);
+
+        //// Generowanie wykresu Gantta
+        //Console.WriteLine(group.GenerateGanttChart(projectStart, projectEnd));
+
+        //Option 4
+        var recurringTask = new RecurringTask(
+    "Zadanie 4",
+    new DateTime(2024, 11, 1),
+    new DateTime(2024, 11, 30),
+    5 // Zadanie powtarza się co 5 dni
+);
+
+        // Oznaczanie niektórych powtórzeń jako wykonanych
+        recurringTask.MarkCompleted(new DateTime(2024, 11, 5));
+        recurringTask.MarkCompleted(new DateTime(2024, 11, 10));
+
+        // Wyświetlanie wykresu Gantta
+        Console.WriteLine($"Wykres Gantta dla zadania '{recurringTask.Name}':");
+        Console.WriteLine(recurringTask.GetGanttChart());
+
     }
 }
