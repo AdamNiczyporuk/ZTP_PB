@@ -61,7 +61,7 @@ public class Task : ITaskComponent
 public class TaskGroup : ITaskComponent
 {
     public string Name { get; }
-    private List<ITaskComponent> _tasks = new List<ITaskComponent>();
+    protected List<ITaskComponent> _tasks = new List<ITaskComponent>();
 
     public TaskGroup(string name)
     {
@@ -77,7 +77,7 @@ public class TaskGroup : ITaskComponent
     {
         _tasks.Remove(task);
     }
-    public bool IsCompleted
+    public virtual bool IsCompleted
     {
         get
         {
@@ -98,7 +98,7 @@ public class TaskGroup : ITaskComponent
             return _tasks.Max(t => t.EndDate);
         }
     }
-    public void MarkAsCompleted(DateTime completionDate)
+    public virtual void MarkAsCompleted(DateTime completionDate)
     {
         foreach (var task in _tasks)
         {
@@ -120,6 +120,26 @@ public class TaskGroup : ITaskComponent
 
 
 
+}
+public class OptionalTaskGroup: TaskGroup
+{
+    public OptionalTaskGroup(string name) : base(name) { }
+
+    public override  bool IsCompleted
+    {
+        get
+        {
+            return _tasks.Any(t=> t.IsCompleted);
+        }
+    }
+    public override void MarkAsCompleted(DateTime completionDate)
+    {
+        if(_tasks.Any(t=> !t.IsCompleted))
+        {
+            var taskComplete = _tasks.First(t => !t.IsCompleted);
+            taskComplete.MarkAsCompleted(completionDate);
+        }
+    }
 }
 public class Program
 {
