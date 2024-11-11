@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Xml.Serialization;
 
 public interface ITaskComponent
 {
     bool IsCompleted { get; }
-    DataSetDateTime StartDate { get; }
-    DataSetDateTime EndDate { get; }
+     DateTime StartDate { get; }
+     DateTime EndDate { get; }
 
     void MarkAsCompleted (DateTime completionDate);
     void Display(int depth = 0);
 
 }
 
-public class Task
+public class Task : ITaskComponent
 {
     public string Name { get; }
     public DateTime StartDate { get; }
@@ -51,8 +52,75 @@ public class Task
     {
         return $"{Name} ({StartDate:dd.MM.yyyy} to {EndDate:dd.MM.yyyy}) - Status: {GetStatus()}";
     }
-}
+    public void Display(int depth = 0)
+    {
+        Console.WriteLine($"{new string(' ', depth * 2)}- {Name} ({StartDate:dd.MM.yyyy} to {EndDate:dd.MM.yyyy}) - Status: {GetStatus()}");
+    }
 
+}
+public class TaskGroup : ITaskComponent
+{
+    public string Name { get; }
+    private List<ITaskComponent> _tasks = new List<ITaskComponent>();
+
+    public TaskGroup(string name)
+    {
+        Name = name;
+    }
+
+    public void Add(ITaskComponent task)
+    {
+        _tasks.Add(task);
+    }
+
+    public void Remove(ITaskComponent task)
+    {
+        _tasks.Remove(task);
+    }
+    public bool IsCompleted
+    {
+        get
+        {
+            return _tasks.All(t => t.IsCompleted);
+        }
+    }
+    public DateTime StartDate
+    {
+        get
+        {
+            return _tasks.Min(t => t.StartDate);
+        }
+    }
+    public DateTime EndDate
+    {
+        get
+        {
+            return _tasks.Max(t => t.EndDate);
+        }
+    }
+    public void MarkAsCompleted(DateTime completionDate)
+    {
+        foreach (var task in _tasks)
+        {
+            if (!task.IsCompleted)
+            {
+                task.MarkAsCompleted(completionDate);
+            }
+            
+        }
+    }
+    public void Display(int depth = 0)
+    {
+        Console.WriteLine($"{new string(' ', depth * 2)}+ {Name}");
+        foreach (var task in _tasks)
+        {
+            task.Display(depth + 1);
+        }
+    }
+
+
+
+}
 public class Program
 {
     public static void Main()
