@@ -1,6 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Xml.Serialization;
+
+public interface ITaskComponent
+{
+    bool IsCompleted { get; }
+    DataSetDateTime StartDate { get; }
+    DataSetDateTime EndDate { get; }
+
+    void MarkAsCompleted (DateTime completionDate);
+    void Display(int depth = 0);
+
+}
 
 public class Task
 {
