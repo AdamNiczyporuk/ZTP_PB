@@ -125,6 +125,8 @@ public class Program
 {
     public static void Main()
     {
+        int consoleWidth = Console.WindowWidth;
+        string line = new string('-', consoleWidth - 1);
         // Przykładowe zadania
         var task1 = new Task("1A - Implementacja algorytmu sortowania", new DateTime(2024, 10, 21), new DateTime(2024, 10, 27));
         var task2 = new Task("1B - Analiza złożoności czasowej", new DateTime(2024, 10, 24), new DateTime(2024, 10, 31));
@@ -157,5 +159,55 @@ public class Program
         Console.WriteLine($"Zadania wykonane z opóźnieniem: {completedLate}");
         Console.WriteLine($"Zadania oczekujące: {pending}");
         Console.WriteLine($"Zadania oczekujące z przekroczonym terminem: {pendingLate}");
+        Console.WriteLine(line);
+        // Tworzenie grupy zadań
+        var group1 = new TaskGroup("Grupa 1");
+        group1.Add(task1);
+        group1.Add(task2);
+
+        var group2 = new TaskGroup("Grupa 2");
+        group2.Add(task3);
+        group2.Add(task4);
+
+        // Tworzenie głównej grupy zadań
+        var mainGroup = new TaskGroup("Projekt");
+        mainGroup.Add(group1);
+        mainGroup.Add(group2);
+
+        // Wyświetlanie struktury hierarchicznej zadań
+        Console.WriteLine("\nStruktura grupy zadań:");
+        mainGroup.Display();
+        
+        // Zliczanie zadań w grupie
+        int groupCompletedOnTime = tasks.Count(t => t.IsCompleted && !t.IsLate);
+        int groupCompletedLate = tasks.Count(t => t.IsCompleted && t.IsLate);
+        int groupPending = tasks.Count(t => !t.IsCompleted);
+        int groupPendingLate = tasks.Count(t => !t.IsCompleted && DateTime.Now > t.EndDate);
+
+        Console.WriteLine("\nPodsumowanie zadań w grupach:");
+        Console.WriteLine($"Zadania wykonane na czas: {groupCompletedOnTime}");
+        Console.WriteLine($"Zadania wykonane z opóźnieniem: {groupCompletedLate}");
+        Console.WriteLine($"Zadania oczekujące: {groupPending}");
+        Console.WriteLine($"Zadania oczekujące z przekroczonym terminem: {groupPendingLate}");
+        Console.WriteLine(line);
+        // Oznaczanie grupy jako wykonanej (rekursywne oznaczanie zadań w grupach)
+        mainGroup.MarkAsCompleted(DateTime.Now);
+
+
+       
+        mainGroup.Display();
+        int groupCompletedOnTime1 = tasks.Count(t => t.IsCompleted && !t.IsLate);
+        int groupCompletedLate1 = tasks.Count(t => t.IsCompleted && t.IsLate);
+        int groupPending1 = tasks.Count(t => !t.IsCompleted);
+        int groupPendingLate1 = tasks.Count(t => !t.IsCompleted && DateTime.Now > t.EndDate);
+
+        Console.WriteLine("\nPodsumowanie zadań w grupach:");
+        Console.WriteLine($"Zadania wykonane na czas: {groupCompletedOnTime1}");
+        Console.WriteLine($"Zadania wykonane z opóźnieniem: {groupCompletedLate1}");
+        Console.WriteLine($"Zadania oczekujące: {groupPending1}");
+        Console.WriteLine($"Zadania oczekujące z przekroczonym terminem: {groupPendingLate1}");
+
+        
+        Console.WriteLine(line);
     }
 }
