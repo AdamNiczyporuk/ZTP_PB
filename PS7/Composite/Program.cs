@@ -473,8 +473,9 @@ public class Program
 );
 
         // Oznaczanie niektórych powtórzeń jako wykonanych
-        recurringTask.MarkCompleted(new DateTime(2024, 11, 5));
-        recurringTask.MarkCompleted(new DateTime(2024, 11, 10));
+        recurringTask.MarkCompleted(new DateTime(2024, 11, 1));
+        
+        recurringTask.MarkCompleted(new DateTime(2024, 11, 29));
 
         // Wyświetlanie wykresu Gantta
         Console.WriteLine($"Wykres Gantta dla zadania '{recurringTask.Name}':");
