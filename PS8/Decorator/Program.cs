@@ -14,6 +14,14 @@ public class Message
     }
 }
 
+
+public interface IMessageBox
+{
+    void AddMessage(Message message);
+    Message GetMessageById(int id);
+    void DisplayAllMessageTitles();
+    void DisplayMessageTitles();
+}
 public class MessageBox
 {
     private List<Message> messages = new List<Message>();
