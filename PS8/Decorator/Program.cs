@@ -7,10 +7,10 @@ public  interface IMessage
     int Id { get; set; }
     string Title { get; set; }
     string Content { get; set; }
-    string Description { get; set; }
+
 
 }
- public class Message
+ public class Message : IMessage
 {
     public int Id { get; set; }
     public string Title { get; set; }
