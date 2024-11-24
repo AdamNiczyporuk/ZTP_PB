@@ -29,9 +29,9 @@ public interface IMessageBox
     void AddMessage(Message message);
     Message GetMessageById(int id);
     void DisplayAllMessageTitles();
-    void DisplayMessageTitles();
+   
 }
-public class MessageBox
+public class MessageBox : IMessageBox
 {
     private List<Message> messages = new List<Message>();
     private int nextId = 1;
