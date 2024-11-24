@@ -1,7 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class Message
+
+public  interface IMessage
+{
+    int Id { get; set; }
+    string Title { get; set; }
+    string Content { get; set; }
+    string Description { get; set; }
+
+}
+ public class Message
 {
     public int Id { get; set; }
     public string Title { get; set; }
