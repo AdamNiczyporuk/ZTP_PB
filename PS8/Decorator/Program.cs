@@ -67,31 +67,58 @@ public abstract class MessageBoxDecorator : IMessageBox
 {
     protected readonly IMessageBox decoratedMessageBox;
 
-    // Konstruktor, który przyjmuje obiekt do dekorowania
+    
     protected MessageBoxDecorator(IMessageBox messageBox)
     {
         decoratedMessageBox = messageBox;
     }
-
-    // Implementacja metody dodawania wiadomości (delegowanie)
+    
     public virtual void AddMessage(Message message)
     {
         decoratedMessageBox.AddMessage(message);
     }
 
-    // Implementacja metody pobierania wiadomości po ID (delegowanie)
+ 
     public virtual Message GetMessageById(int id)
     {
         return decoratedMessageBox.GetMessageById(id);
     }
 
-    // Implementacja wyświetlania tytułów wiadomości (delegowanie)
     public virtual void DisplayAllMessageTitles()
     {
         decoratedMessageBox.DisplayAllMessageTitles();
     }
 
 }
+public class BlockingAddMessageBoxDecorator : MessageBoxDecorator
+{
+    private readonly string bannedWord;
+
+    public BlockingAddMessageBoxDecorator(IMessageBox messageBox, string bannedWord) : base(messageBox)
+    {
+        this.bannedWord = bannedWord;
+    }
+
+    public override void AddMessage(Message message)
+    {
+        if (message.Content.Contains(bannedWord, StringComparison.OrdinalIgnoreCase))
+        {
+            Console.WriteLine($"Wiadomość zawiera zakazane słowo: \"{bannedWord}\" i nie zostanie dodana.");
+        }
+        else
+        {
+            base.AddMessage(message);
+        }   
+       
+    }
+}
+public class HiddenMessage : IMessage
+{
+    public int Id { get; set; } = -1;
+    public string Title { get; set; } = "Wiadomość ukryta";
+    public string Content { get; set; } = "Ta wiadomość została ukryta z powodu niedozwolonej treści.";
+}
+
 
 class Program
 {
