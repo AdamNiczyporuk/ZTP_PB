@@ -63,6 +63,35 @@ public class MessageBox : IMessageBox
         }
     }
 }
+public abstract class MessageBoxDecorator : IMessageBox
+{
+    protected readonly IMessageBox decoratedMessageBox;
+
+    // Konstruktor, który przyjmuje obiekt do dekorowania
+    protected MessageBoxDecorator(IMessageBox messageBox)
+    {
+        decoratedMessageBox = messageBox;
+    }
+
+    // Implementacja metody dodawania wiadomości (delegowanie)
+    public virtual void AddMessage(Message message)
+    {
+        decoratedMessageBox.AddMessage(message);
+    }
+
+    // Implementacja metody pobierania wiadomości po ID (delegowanie)
+    public virtual Message GetMessageById(int id)
+    {
+        return decoratedMessageBox.GetMessageById(id);
+    }
+
+    // Implementacja wyświetlania tytułów wiadomości (delegowanie)
+    public virtual void DisplayAllMessageTitles()
+    {
+        decoratedMessageBox.DisplayAllMessageTitles();
+    }
+
+}
 
 class Program
 {
