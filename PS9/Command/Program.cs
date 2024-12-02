@@ -6,12 +6,100 @@ using System.Text.RegularExpressions;
 // oraz kolor (biały lub czarny).
 
 
+public class CommandManager
+{
+    private readonly Stack<ICommand> executedCommands = new();
+    private readonly Stack<ICommand> undoneCommands = new();
+    private readonly ChessBoard board;
+    private readonly List<string> history = new();
+
+    public CommandManager(ChessBoard board)
+    {
+        this.board = board;
+    }
+
+    public void ExecuteCommand(ICommand command)
+    {
+        command.Execute();
+        executedCommands.Push(command);
+        undoneCommands.Clear();
+        history.Add(board.SaveState());
+    }
+
+    public void Undo()
+    {
+        if (executedCommands.TryPop(out var command))
+        {
+            command.Undo();
+            undoneCommands.Push(command);
+            history.Add(board.SaveState());
+        }
+    }
+
+    public void Redo()
+    {
+        if (undoneCommands.TryPop(out var command))
+        {
+            command.Execute();
+            executedCommands.Push(command);
+            history.Add(board.SaveState());
+        }
+    }
+
+    public void Replay()
+    {
+        foreach (var state in history)
+        {
+            Console.Clear();
+            board.LoadState(state);
+            Console.WriteLine(board);
+            Thread.Sleep(1000); // 1-sekundowa pauza
+        }
+    }
+}
+
+
+
 
 
 public interface ICommand
 {
     void Execute();
-    void Unexecute();
+    void Undo();
+}
+
+public class MoveCommand: ICommand
+{
+    private readonly ChessBoard board;
+    private readonly int fromRow,fromCol,toRow,toCol;
+    private ChessPiece movedPiece;
+    private ChessPiece capturedPiece;
+
+    public MoveCommand(ChessBoard board, int fromRow, int fromCol, int toRow, int toCol)
+    {
+        this.board = board;
+        this.fromRow = fromRow;
+        this.fromCol = fromCol;
+        this.toRow = toRow;
+        this.toCol = toCol;
+    }
+
+    public void Execute()
+    {
+        movedPiece = board.GetPiece(fromRow, fromCol);
+        board.MovePiece(fromRow, fromCol, toRow, toCol, out capturedPiece);
+    }
+
+    public void Undo()
+    {
+        board.SetPiece(fromRow, fromCol, movedPiece);
+        board.SetPiece(toRow, toCol, capturedPiece);
+    }
+
+
+
+
+
 }
 
 public class ChessPiece
