@@ -53,7 +53,7 @@ public class CommandManager
             Console.Clear();
             board.LoadState(state);
             Console.WriteLine(board);
-            Thread.Sleep(1000); // 1-sekundowa pauza
+            Thread.Sleep(1000); 
         }
     }
 }
@@ -95,11 +95,6 @@ public class MoveCommand: ICommand
         board.SetPiece(fromRow, fromCol, movedPiece);
         board.SetPiece(toRow, toCol, capturedPiece);
     }
-
-
-
-
-
 }
 
 public class ChessPiece
