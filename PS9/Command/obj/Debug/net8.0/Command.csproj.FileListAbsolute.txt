@@ -1,0 +1,15 @@
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\bin\Debug\net8.0\Command.exe
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\bin\Debug\net8.0\Command.deps.json
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\bin\Debug\net8.0\Command.runtimeconfig.json
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\bin\Debug\net8.0\Command.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\bin\Debug\net8.0\Command.pdb
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\obj\Debug\net8.0\Command.GeneratedMSBuildEditorConfig.editorconfig
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\obj\Debug\net8.0\Command.AssemblyInfoInputs.cache
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\obj\Debug\net8.0\Command.AssemblyInfo.cs
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\obj\Debug\net8.0\Command.csproj.CoreCompileInputs.cache
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\obj\Debug\net8.0\Command.sourcelink.json
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\obj\Debug\net8.0\Command.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\obj\Debug\net8.0\refint\Command.dll
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\obj\Debug\net8.0\Command.pdb
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\obj\Debug\net8.0\Command.genruntimeconfig.cache
+D:\AAAAAAAANAUKA\AAStudia\SEMESTR5\ZTP\ZTP_PB\PS9\Command\obj\Debug\net8.0\ref\Command.dll

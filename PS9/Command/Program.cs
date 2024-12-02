@@ -4,6 +4,16 @@ using System.Text.RegularExpressions;
 
 // Reprezentuje pojedynczą figurę szachową, w tym jej typ (np. pion, wieża)
 // oraz kolor (biały lub czarny).
+
+
+
+
+public interface ICommand
+{
+    void Execute();
+    void Unexecute();
+}
+
 public class ChessPiece
 {
     public enum PieceType { Pawn, Rook, Knight, Bishop, Queen, King }
