@@ -266,8 +266,9 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        // Tworzymy nową szachownicę i ustawiamy początkowy (domyślny) układ
-        ChessBoard board = new ChessBoard();
+        ChessBoard board = new();
+        CommandManager manager = new(board);
+
         string defaultNotation = @"
             ra8 nb8 bc8 qd8 ke8 bf8 ng8 rh8
             pa7 pb7 pc7 pd7 pe7 pf7 pg7 ph7
@@ -275,26 +276,42 @@ public class Program
             Ra1 Nb1 Bc1 Qd1 Ke1 Bf1 Ng1 Rh1
         ";
         board.InitializeFromString(defaultNotation);
-
-        // Wyświetlenie początkowego stanu planszy
         Console.WriteLine(board);
 
-        // Pętla gry: użytkownik wprowadza ruchy w formacie "e2 e4"
         while (true)
         {
-            Console.Write("Wprowadź ruch (np. e2 e4 lub 'exit' aby zakończyć): ");
+            Console.Write("Podaj polecenie (ruch np. 'e2 e4', undo, redo, replay, exit): ");
             string input = Console.ReadLine();
 
-            // Wyjście z gry
-            if ("exit".Equals(input, StringComparison.OrdinalIgnoreCase))
+            if (input.Equals("exit", StringComparison.OrdinalIgnoreCase))
             {
                 Console.WriteLine("Gra zakończona.");
                 break;
             }
 
+            if (input.Equals("undo", StringComparison.OrdinalIgnoreCase))
+            {
+                manager.Undo();
+                Console.WriteLine(board);
+                continue;
+            }
+
+            if (input.Equals("redo", StringComparison.OrdinalIgnoreCase))
+            {
+                manager.Redo();
+                Console.WriteLine(board);
+                continue;
+            }
+
+            if (input.Equals("replay", StringComparison.OrdinalIgnoreCase))
+            {
+                manager.Replay();
+                Console.WriteLine(board);
+                continue;
+            }
+
             try
             {
-                // Rozdzielenie ruchu na pole startowe i końcowe
                 string[] parts = input.Split(' ');
                 if (parts.Length != 2)
                 {
@@ -302,28 +319,18 @@ public class Program
                     continue;
                 }
 
-                string from = parts[0]; // Pole startowe
-                string to = parts[1];   // Pole docelowe
+                int fromRow = 8 - (parts[0][1] - '0');
+                int fromCol = parts[0][0] - 'a';
+                int toRow = 8 - (parts[1][1] - '0');
+                int toCol = parts[1][0] - 'a';
 
-                // Konwersja notacji szachowej na indeksy tablicy
-                int fromRow = 8 - (from[1] - '0');
-                int fromCol = from[0] - 'a';
-                int toRow = 8 - (to[1] - '0');
-                int toCol = to[0] - 'a';
-
-                // Wykonanie ruchu i aktualizacja planszy
-                if (board.MovePiece(fromRow, fromCol, toRow, toCol))
-                {
-                    Console.WriteLine(board);
-                }
-                else
-                {
-                    Console.WriteLine("Nie można wykonać ruchu.");
-                }
+                var move = new MoveCommand(board, fromRow, fromCol, toRow, toCol);
+                manager.ExecuteCommand(move);
+                Console.WriteLine(board);
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Błąd podczas przetwarzania ruchu: {e.Message}");
+                Console.WriteLine($"Błąd: {e.Message}");
             }
         }
     }
