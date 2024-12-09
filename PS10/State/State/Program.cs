@@ -1,23 +1,19 @@
-﻿using System;
+﻿using State;
+using System;
 using System.Collections.Generic;
 
 
-
-public interface IOrderState
-{
-    void AddProduct(Order order, string product);
-    void SubmitOrder(Order order);
-    void ConfirmPayment(Order order);
-    void PackProduct(Order order, string product);
-    void ShipOrder(Order order);
-    void CancelOrder(Order order);
-    void ShowOrderDetails(Order order);
-}
 public class Order
 {
-    private IOrderState state;
+    
     public Dictionary<string, bool> Products { get; } = new(); // Produkty: nazwa -> czy spakowany
-    private bool isPaid = false; // Czy zamówienie zostało opłacone?
+    public bool isPaid = false; // Czy zamówienie zostało opłacone?
+    private IOrderState state;
+
+    public Order(IOrderState state)
+    {
+        this.state = state;
+    }
 
     // Dodaje produkt do zamówienia
     public void AddProduct(string product)
@@ -78,6 +74,11 @@ public class Order
         {
             Console.WriteLine($" - {product.Key}: {(product.Value ? "Spakowany" : "Nie spakowany")}");
         }
+    }
+
+    public void SetState(IOrderState state)
+    {
+        this.state = state;
     }
 }
 
