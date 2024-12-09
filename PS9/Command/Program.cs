@@ -51,7 +51,7 @@ public class CommandManager
         foreach (var state in history)
         {
             Console.Clear();
-            board.LoadState(state);
+            board.InitializeFromString(state);
             Console.WriteLine(board);
             Thread.Sleep(1000); 
         }
@@ -208,10 +208,7 @@ public class ChessBoard
         return sb.ToString().Trim();
     }
 
-    public void LoadState(string state)
-    {
-        InitializeFromString(state);
-    }
+   
 
     public void InitializeFromString(string notation)
     {
