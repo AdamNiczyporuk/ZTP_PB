@@ -107,7 +107,7 @@ namespace State
     {
         public void AddProduct(Order order,string product)
         {
-            Console.WriteLine("Zamówienie zostało opłacone");
+            Console.WriteLine("Zamówienie zostało opłacone nie można dodać nowego produktu");
         }
         public void SubmitOrder(Order order)
         {
@@ -162,7 +162,7 @@ namespace State
     {
         public void AddProduct(Order order, string product)
         {
-            Console.WriteLine("Zamówienie zostało wysłane.");
+            Console.WriteLine("Zamówienie zostało już wysłane.Nie można dodać nowego!");
         }
         public void SubmitOrder(Order order)
         {
@@ -182,7 +182,7 @@ namespace State
         }
         public void CancelOrder(Order order)
         {
-            Console.WriteLine("Zamówienie zostało wysłane.");
+            Console.WriteLine("Zamówienie zostało wysłane.NIe można go anulować");
         }
         public void ShowOrderDetails(Order order)
         {
