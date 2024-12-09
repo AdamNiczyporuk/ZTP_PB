@@ -19,13 +19,29 @@ namespace State
 
     public class CreatedState : IOrderState
     {
+
         public void AddProduct(Order order, string product)
         {
+            if (order.Products.ContainsKey(product))
+            {
+                Console.WriteLine($"Produkt {product} jest już w zamówieniu.");
+                return;
+            }
+            if (order.isPaid)
+            {
+                Console.WriteLine("Nie można dodawać produktów do opłaconego zamówienia.");
+                return;
+            }
             order.Products.Add(product, false);
             Console.WriteLine($"Dodano produkt: {product}");
         }
         public void SubmitOrder(Order order)
         {
+            if (order.Products.Count == 0)
+            {
+                Console.WriteLine("Nie można złożyć pustego zamówienia.");
+                return;
+            }
             Console.WriteLine("Zamówienie zostało złożone i oczekuje na opłatę.");
             order.SetState(new SubmittedState());
         }
@@ -103,12 +119,27 @@ namespace State
         }
         public void PackProduct(Order order, string product)
         {
+            if (!order.Products.ContainsKey(product))
+            {
+                Console.WriteLine($"Produkt {product} nie znajduje się w zamówieniu.");
+                return;
+            }
+            if (order.Products[product])
+            {
+                Console.WriteLine($"Produkt {product} jest już spakowany.");
+                return;
+            }
             order.Products[product] = true;
             Console.WriteLine($"Produkt {product} został spakowany.");
         }
         public void ShipOrder(Order order)
         {
-            Console.WriteLine("Zamówienie nie zostało jeszcze spakowane.");
+            if (order.Products.Values.Any(packed => !packed))
+            {
+                Console.WriteLine("Nie wszystkie produkty zostały spakowane. Nie można wysłać zamówienia.");
+                return;
+            }
+            Console.WriteLine("Zamówienie zostało wysłane.");
             order.SetState(new ShippedState());
         }
         public void CancelOrder(Order order)

@@ -7,7 +7,7 @@ public class Order
 {
     
     public Dictionary<string, bool> Products { get; } = new(); // Produkty: nazwa -> czy spakowany
-    public bool isPaid = false; // Czy zamówienie zostało opłacone?
+    public  bool isPaid = false; // Czy zamówienie zostało opłacone?
     private IOrderState state;
 
     public Order(IOrderState state)
@@ -18,62 +18,43 @@ public class Order
     // Dodaje produkt do zamówienia
     public void AddProduct(string product)
     {
-        if (isPaid)
-        {
-            Console.WriteLine("Nie można dodawać produktów do opłaconego zamówienia.");
-            return;
-        }
-        Products.Add(product, false);
-        Console.WriteLine($"Dodano produkt: {product}");
+       state.AddProduct(this, product);
     }
 
     // Zatwierdza zamówienie
     public void SubmitOrder()
     {
-        Console.WriteLine("Zamówienie zostało złożone i oczekuje na opłatę.");
+         state.SubmitOrder(this);
     }
 
     // Oznacza zamówienie jako opłacone
     public void ConfirmPayment()
     {
-        isPaid = true;
-        Console.WriteLine("Płatność została potwierdzona.");
+       state.ConfirmPayment(this);
     }
 
     // Oznacza dany produkt jako spakowany
     public void PackProduct(string product)
     {
-        Products[product] = true;
-        Console.WriteLine($"Produkt {product} został spakowany.");
+       state.PackProduct(this, product);
     }
 
     // Wysyła zamówienie
     public void ShipOrder()
     {
-        Console.WriteLine("Zamówienie zostało wysłane.");
+        state.ShipOrder(this);
     }
 
     // Anuluje zamówienie
     public void CancelOrder()
     {
-        if (isPaid)
-        {
-            Console.WriteLine("Środki zostały zwrócone klientowi.");
-        }
-
-        Console.WriteLine("Zamówienie zostało anulowane.");
-        Products.Clear();
-        isPaid = false;
+        state.CancelOrder(this);
     }
 
     // Wyświetla szczegóły zamówienia
     public void ShowOrderDetails()
     {
-        Console.WriteLine($"Zamówienie [{(isPaid ? "Opłacone" : "Nieopłacone")}]:");
-        foreach (var product in Products)
-        {
-            Console.WriteLine($" - {product.Key}: {(product.Value ? "Spakowany" : "Nie spakowany")}");
-        }
+       state.ShowOrderDetails(this);
     }
 
     public void SetState(IOrderState state)
@@ -86,25 +67,30 @@ public class Program
 {
     static void Main(string[] args)
     {
-        Order order = new Order();
+        Order order = new Order(new CreatedState());
 
-        // Dodawanie produktów
+
         order.AddProduct("Laptop");
         order.AddProduct("Myszka");
         order.ShowOrderDetails();
 
-        // Złożenie zamówienia
+
         order.SubmitOrder();
+        order.ShowOrderDetails();
 
-        // Potwierdzenie płatności
+
         order.ConfirmPayment();
+        order.ShowOrderDetails();
 
-        // Spakowanie produktów
+
         order.PackProduct("Laptop");
         order.PackProduct("Myszka");
         order.ShowOrderDetails();
 
-        // Wysłanie zamówienia
         order.ShipOrder();
+        order.ShowOrderDetails();
+
+        order.CancelOrder();
+        order.ShowOrderDetails();
     }
 }
